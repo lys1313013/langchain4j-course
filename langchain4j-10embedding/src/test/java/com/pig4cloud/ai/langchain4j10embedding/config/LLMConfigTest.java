@@ -27,6 +27,9 @@ class LLMConfigTest {
     @Autowired
     private EmbeddingStore<TextSegment> embeddingStore;
 
+    /**
+     * 文本向量化
+     */
     @Test
     void embeddingModel() {
 
@@ -41,18 +44,24 @@ class LLMConfigTest {
                 .setDistance(Collections.Distance.Cosine)
                 .setSize(1024)
                 .build();
+        // openai与阿里的纬度不一样
         qdrantClient.createCollectionAsync("testv", vectorParams);
     }
 
-
+    /**
+     * 往向量数据库插入数据
+     */
     @Test
-    void testText() {
+    void insertText() {
         TextSegment segment1 = TextSegment.from("浏览器报错 404，请检测您输入的路径是否正确");
         segment1.metadata().put("author", "冷冷");
         Embedding embedding1 = embeddingModel.embed(segment1).content();
         embeddingStore.add(embedding1, segment1);
     }
 
+    /**
+     * 根据向量文本查询
+     */
     @Test
     void testQuery1(){
         Embedding queryEmbedding = embeddingModel.embed("404 是哪里的问题？").content();
@@ -64,6 +73,9 @@ class LLMConfigTest {
         System.out.println(searchResult.matches().get(0).embedded().text());
     }
 
+    /**
+     * 根据向量文本+作者匹配
+     */
     @Test
     void testQuery2(){
         Embedding queryEmbedding = embeddingModel.embed("404 是哪里的问题？").content();
