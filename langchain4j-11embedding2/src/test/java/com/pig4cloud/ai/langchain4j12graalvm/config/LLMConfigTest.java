@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
-
 @SpringBootTest
 class LLMConfigTest {
 
@@ -16,8 +14,10 @@ class LLMConfigTest {
 
     @Test
     void textClassifier() {
-        List<PersonalityTrait> personalityTraitList= textClassifier.classify("赠人玫瑰，手有余香");
+        System.out.println(textClassifier.classify("我喜欢结交新朋友"));
+        // 输出：EXTROVERT
 
-        System.out.println(personalityTraitList);
+        System.out.println(textClassifier.classify("赠人玫瑰，手有余香"));
+        // 输出：TEAM_PLAYER
     }
 }
