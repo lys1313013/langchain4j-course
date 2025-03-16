@@ -9,6 +9,11 @@ import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+
+import java.io.IOException;
 
 @SpringBootTest
 class LLMConfigTest {
@@ -19,11 +24,14 @@ class LLMConfigTest {
     ChatAssistant chatAssistant;
 
     @Test
-    void testAdd() {
-        Document document = FileSystemDocumentLoader.loadDocument("/Users/lengleng/Downloads/test.docx");
+    void testAdd() throws IOException {
+        ResourceLoader resourceLoader = new DefaultResourceLoader();
+        Resource resource = resourceLoader.getResource("classpath:测试向量.docx");
+        Document document = FileSystemDocumentLoader.loadDocument(resource.getFile().toPath());
         EmbeddingStoreIngestor.ingest(document, embeddingStore);
 
         String chat = chatAssistant.chat("合同的金额是多少");
         System.out.println(chat);
     }
+
 }
