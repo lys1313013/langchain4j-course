@@ -11,9 +11,13 @@ import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 
 @SpringBootTest
@@ -26,8 +30,10 @@ class LLMConfigTest {
     ChatAssistant chatAssistant;
 
     @Test
-    void testAdd() {
-        Document document = FileSystemDocumentLoader.loadDocument("/Users/lengleng/Downloads/test.docx");
+    void testAdd() throws IOException {
+        ResourceLoader resourceLoader = new DefaultResourceLoader();
+        Resource resource = resourceLoader.getResource("classpath:test.docx");
+        Document document = FileSystemDocumentLoader.loadDocument(resource.getFile().toPath());
         EmbeddingStoreIngestor.ingest(document, embeddingStore);
 
 
@@ -36,17 +42,25 @@ class LLMConfigTest {
     }
 
     @Test
-    void test1() throws FileNotFoundException {
+    void test1() throws IOException {
 
-        FileInputStream fileInputStream = new FileInputStream("/Users/lengleng/Downloads/test.docx");
+        ResourceLoader resourceLoader = new DefaultResourceLoader();
+        Resource resource = resourceLoader.getResource("classpath:test.docx");
+        Path path = resource.getFile().toPath();
+        String abSolutePath = path.toAbsolutePath().toString();
+        FileInputStream fileInputStream = new FileInputStream(abSolutePath);
         Document document = new ApachePoiDocumentParser().parse(fileInputStream);
 
         System.out.println(document);
     }
 
     @Test
-    void test2() throws FileNotFoundException {
-        FileInputStream fileInputStream = new FileInputStream("/Users/lengleng/Downloads/test.docx");
+    void test2() throws IOException {
+        ResourceLoader resourceLoader = new DefaultResourceLoader();
+        Resource resource = resourceLoader.getResource("classpath:test.docx");
+        Path path = resource.getFile().toPath();
+        String abSolutePath = path.toAbsolutePath().toString();
+        FileInputStream fileInputStream = new FileInputStream(abSolutePath);
         Document document = new ApachePoiDocumentParser().parse(fileInputStream);
 
         List<TextSegment> split = new DocumentByCharacterSplitter(100, 0).split(document);

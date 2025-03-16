@@ -26,7 +26,7 @@ class LLMConfigTest {
     @Test
     void testAdd() throws IOException {
         ResourceLoader resourceLoader = new DefaultResourceLoader();
-        Resource resource = resourceLoader.getResource("classpath:测试向量.docx");
+        Resource resource = resourceLoader.getResource("classpath:test.docx");
         Document document = FileSystemDocumentLoader.loadDocument(resource.getFile().toPath());
         EmbeddingStoreIngestor.ingest(document, embeddingStore);
 
