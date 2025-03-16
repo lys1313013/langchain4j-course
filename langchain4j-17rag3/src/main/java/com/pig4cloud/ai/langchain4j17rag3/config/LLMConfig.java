@@ -57,7 +57,7 @@ public class LLMConfig {
                 .queryTransformer(new CompressingQueryTransformer(chatLanguageModel)) //  调用大模型，格式化用户提问
                 .contentRetriever(EmbeddingStoreContentRetriever.from(embeddingStore)) // 从嵌入存储中检索内容
                 .queryRouter(new DefaultQueryRouter(EmbeddingStoreContentRetriever.from(embeddingStore)))// 多个内容源
-                .contentInjector(new DefaultContentInjector()) // 注入内容
+                .contentInjector(new DefaultContentInjector()) // 注入默认查询增强模板
                 .contentAggregator(new ReRankingContentAggregator(scoringModel)) // 聚合内容
                 .build();
 
