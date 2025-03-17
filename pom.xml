@@ -44,6 +44,8 @@
         <module>langchain4j-16rag2</module>
         <module>langchain4j-17rag3</module>
         <module>langchain4j-18-ollama</module>
+        <module>langchain4j-19-weaviate</module>
+        <module>langchain4j-20-demo</module>
     </modules>
 
     <dependencyManagement>
