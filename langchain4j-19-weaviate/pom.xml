@@ -4,6 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>com.pig4cloud.ai</groupId>
+        <artifactId>langchain4j-course</artifactId>
+        <version>1.0</version>
+    </parent>
+
     <artifactId>langchain4j-19-weaviate</artifactId>
 
     <properties>
@@ -32,6 +38,11 @@
             <version>1.19.6</version>
         </dependency>
 
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-core</artifactId>
+            <version>1.0.0-beta1</version>
+        </dependency>
     </dependencies>
 
 </project>
